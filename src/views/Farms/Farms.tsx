@@ -2,9 +2,9 @@ import React, { useEffect, useCallback, useState, useMemo, useRef } from 'react'
 import { Route, useRouteMatch, useLocation, NavLink } from 'react-router-dom'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
-import { Image, Heading, RowType, Toggle, Text, Button, ArrowForwardIcon, Flex } from '@pancakeswap/uikit'
+import { Image, Heading, Box, Toggle, Text, Button, ArrowForwardIcon, Flex, Card, CardBody, CardHeader } from '@pancakeswap/uikit'
 import { ChainId } from '@pancakeswap/sdk'
-import styled from 'styled-components'
+import styled, { keyframes,DefaultTheme } from 'styled-components'
 import FlexLayout from 'components/Layout/Flex'
 import Page from 'components/Layout/Page'
 import { useFarms, usePollFarmsData, usePriceCakeBusd } from 'state/farms/hooks'
@@ -26,6 +26,8 @@ import FarmTabButtons from './components/FarmTabButtons'
 import { RowProps } from './components/FarmTable/Row'
 import ToggleView from './components/ToggleView/ToggleView'
 import { DesktopColumnSchema, ViewMode } from './components/types'
+
+import HeaderBanner from './components/HeaderBanner'
 
 const ControlContainer = styled.div`
   display: flex;
@@ -93,6 +95,18 @@ const ViewControls = styled.div`
     }
   }
 `
+const getBackground = (theme: DefaultTheme) => {
+  if (theme.isDark) {
+    return '#041228'
+  }
+  return '#FFFFFF'
+}
+
+const TeamRank = styled.div`
+  // align-self: stretch;
+  background: ${({ theme }) => getBackground(theme)};
+  flex: none;
+`
 
 const StyledImage = styled(Image)`
   margin-left: auto;
@@ -118,7 +132,7 @@ const Farms: React.FC = () => {
   const { data: farmsLP, userDataLoaded } = useFarms()
   const cakePrice = usePriceCakeBusd()
   const [query, setQuery] = useState('')
-  const [viewMode, setViewMode] = usePersistState(ViewMode.TABLE, { localStorageKey: 'pancake_farm_view' })
+  const [viewMode, setViewMode] = usePersistState(ViewMode.CARD, { localStorageKey: 'pancake_farm_view' })
   const { account } = useWeb3React()
   const [sortOption, setSortOption] = useState('hot')
   const chosenFarmsLength = useRef(0)
@@ -305,35 +319,6 @@ const Farms: React.FC = () => {
   })
 
   const renderContent = (): JSX.Element => {
-    if (viewMode === ViewMode.TABLE && rowData.length) {
-      const columnSchema = DesktopColumnSchema
-
-      const columns = columnSchema.map((column) => ({
-        id: column.id,
-        name: column.name,
-        label: column.label,
-        sort: (a: RowType<RowProps>, b: RowType<RowProps>) => {
-          switch (column.name) {
-            case 'farm':
-              return b.id - a.id
-            case 'apr':
-              if (a.original.apr.value && b.original.apr.value) {
-                return Number(a.original.apr.value) - Number(b.original.apr.value)
-              }
-
-              return 0
-            case 'earned':
-              return a.original.earned.earnings - b.original.earned.earnings
-            default:
-              return 1
-          }
-        },
-        sortable: column.sortable,
-      }))
-
-      return <Table data={rowData} columns={columns} userDataReady={userDataReady} />
-    }
-
     return (
       <div>
         <FlexLayout>
@@ -383,68 +368,9 @@ const Farms: React.FC = () => {
   }
 
   return (
-    <>
-      <PageHeader>
-        <Heading as="h1" scale="xxl" color="secondary" mb="24px">
-          {t('Farms')}
-        </Heading>
-        <Heading scale="lg" color="text">
-          {t('Stake LP tokens to earn.')}
-        </Heading>
-        <NavLink exact activeClassName="active" to="/farms/auction" id="lottery-pot-banner">
-          <Button p="0" variant="text">
-            <Text color="primary" bold fontSize="16px" mr="4px">
-              {t('Community Auctions')}
-            </Text>
-            <ArrowForwardIcon color="primary" />
-          </Button>
-        </NavLink>
-      </PageHeader>
+    <TeamRank>
+      <HeaderBanner title='Title Banner' subtitle='Lorem ipsum, dolor sit amet consectetur adipisicing elit.' />
       <Page>
-        <ControlContainer>
-          <ViewControls>
-            <ToggleView viewMode={viewMode} onToggle={(mode: ViewMode) => setViewMode(mode)} />
-            <ToggleWrapper>
-              <Toggle checked={stakedOnly} onChange={() => setStakedOnly(!stakedOnly)} scale="sm" />
-              <Text> {t('Staked only')}</Text>
-            </ToggleWrapper>
-            <FarmTabButtons hasStakeInFinishedFarms={stakedInactiveFarms.length > 0} />
-          </ViewControls>
-          <FilterContainer>
-            <LabelWrapper>
-              <Text textTransform="uppercase">{t('Sort by')}</Text>
-              <Select
-                options={[
-                  {
-                    label: t('Hot'),
-                    value: 'hot',
-                  },
-                  {
-                    label: t('APR'),
-                    value: 'apr',
-                  },
-                  {
-                    label: t('Multiplier'),
-                    value: 'multiplier',
-                  },
-                  {
-                    label: t('Earned'),
-                    value: 'earned',
-                  },
-                  {
-                    label: t('Liquidity'),
-                    value: 'liquidity',
-                  },
-                ]}
-                onChange={handleSortOptionChange}
-              />
-            </LabelWrapper>
-            <LabelWrapper style={{ marginLeft: 16 }}>
-              <Text textTransform="uppercase">{t('Search')}</Text>
-              <SearchInput onChange={handleChangeQuery} placeholder="Search Farms" />
-            </LabelWrapper>
-          </FilterContainer>
-        </ControlContainer>
         {renderContent()}
         {account && !userDataLoaded && stakedOnly && (
           <Flex justifyContent="center">
@@ -454,7 +380,7 @@ const Farms: React.FC = () => {
         <div ref={loadMoreRef} />
         <StyledImage src="/images/decorations/3dpan.png" alt="Pancake illustration" width={120} height={103} />
       </Page>
-    </>
+    </TeamRank>
   )
 }
 

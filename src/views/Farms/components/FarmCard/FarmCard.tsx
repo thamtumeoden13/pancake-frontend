@@ -47,7 +47,7 @@ const StyledCardAccent = styled.div`
 
 const FCard = styled.div<{ isPromotedFarm: boolean }>`
   align-self: baseline;
-  background: ${(props) => props.theme.card.background};
+  // background: ${(props) => props.theme.card.background};
   border-radius: ${({ theme, isPromotedFarm }) => (isPromotedFarm ? '31px' : theme.radii.card)};
   box-shadow: 0px 1px 4px rgba(25, 19, 38, 0.15);
   display: flex;
@@ -56,6 +56,7 @@ const FCard = styled.div<{ isPromotedFarm: boolean }>`
   padding: 24px;
   position: relative;
   text-align: center;
+  background-image: url('https://defiwarrior.thegioigiaodien.com/images/background_banner.png');
 `
 
 const Divider = styled.div`
@@ -111,8 +112,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
       />
       {!removed && (
         <Flex justifyContent="space-between" alignItems="center">
-          <Text>{t('APR')}:</Text>
-          <Text bold style={{ display: 'flex', alignItems: 'center' }}>
+          <Text style={{ color: "white" }}>{t('APR')}:</Text>
+          <Text bold style={{ display: 'flex', alignItems: 'center' ,color: "white"}}>
             {farm.apr ? (
               <>
                 <ApyButton
@@ -131,8 +132,8 @@ const FarmCard: React.FC<FarmCardProps> = ({ farm, displayApr, removed, cakePric
         </Flex>
       )}
       <Flex justifyContent="space-between">
-        <Text>{t('Earn')}:</Text>
-        <Text bold>{earnLabel}</Text>
+        <Text style={{color:"white"}}>{t('Earn')}:</Text>
+        <Text style={{color:"white"}} bold>{earnLabel}</Text>
       </Flex>
       <CardActionsContainer farm={farm} account={account} addLiquidityUrl={addLiquidityUrl} />
       <Divider />

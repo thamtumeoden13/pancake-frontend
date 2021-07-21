@@ -32,9 +32,9 @@ const DetailsSection: React.FC<ExpandableSectionProps> = ({
 
   return (
     <Wrapper>
-      <Flex justifyContent="space-between">
-        <Text>{t('Total Liquidity')}:</Text>
-        {totalValueFormatted ? <Text>{totalValueFormatted}</Text> : <Skeleton width={75} height={25} />}
+      <Flex justifyContent="space-between" >
+        <Text style={{ color: "#fff" }}>{t('Total Liquidity')}:</Text>
+        {totalValueFormatted ? <Text style={{ color: "#fff" }}>{totalValueFormatted}</Text> : <Skeleton width={75} height={25} />}
       </Flex>
       {!removed && (
         <StyledLinkExternal href={addLiquidityUrl}>{t('Get %symbol%', { symbol: lpLabel })}</StyledLinkExternal>
