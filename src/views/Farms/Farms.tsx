@@ -2,7 +2,20 @@ import React, { useEffect, useCallback, useState, useMemo, useRef } from 'react'
 import { Route, useRouteMatch, useLocation, NavLink } from 'react-router-dom'
 import BigNumber from 'bignumber.js'
 import { useWeb3React } from '@web3-react/core'
-import { Image, Heading, RowType, Box, Toggle, Text, Button, ArrowForwardIcon, Flex, Card, CardBody, CardHeader } from '@pancakeswap/uikit'
+import {
+  Image,
+  Heading,
+  RowType,
+  Box,
+  Toggle,
+  Text,
+  Button,
+  ArrowForwardIcon,
+  Flex,
+  Card,
+  CardBody,
+  CardHeader,
+} from '@pancakeswap/uikit'
 import { ChainId } from '@pancakeswap/sdk'
 import styled, { keyframes, DefaultTheme } from 'styled-components'
 import FlexLayout from 'components/Layout/Flex'
@@ -369,7 +382,7 @@ const Farms: React.FC = () => {
 
   return (
     <TeamRank>
-      <HeaderBanner title='Title Banner' subtitle='Lorem ipsum, dolor sit amet consectetur adipisicing elit.' />
+      <HeaderBanner title="Title Banner" subtitle="Lorem ipsum, dolor sit amet consectetur adipisicing elit." />
       <Page>
         {renderContent()}
         {account && !userDataLoaded && stakedOnly && (

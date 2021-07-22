@@ -38,7 +38,7 @@ const HarvestAction: React.FC<FarmCardActionsProps> = ({ earnings, pid, isDisabl
           <Balance fontSize="12px" color="textSubtle" decimals={2} value={earningsBusd} unit=" USD" prefix="~" />
         )}
       </Flex>
-      {!isDisableHarvest &&
+      {!isDisableHarvest && (
         <Button
           disabled={rawEarningsBalance.eq(0) || pendingTx}
           onClick={async () => {
@@ -62,7 +62,8 @@ const HarvestAction: React.FC<FarmCardActionsProps> = ({ earnings, pid, isDisabl
           }}
         >
           {t('Harvest')}
-        </Button>}
+        </Button>
+      )}
     </Flex>
   )
 }

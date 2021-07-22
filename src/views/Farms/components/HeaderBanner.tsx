@@ -31,7 +31,7 @@ const Inner = styled(Container)`
   flex-direction: row;
   // background-image: linear-gradient(#7645d9, #452a7a);
   background-image: url('https://defiwarrior.thegioigiaodien.com/images/background_banner.png');
-  border-radius: ${({ theme }) => (theme.radii.card)};
+  border-radius: ${({ theme }) => theme.radii.card};
   box-shadow: 0px 1px 4px rgba(25, 19, 38, 0.15);
   max-height: max-content;
   padding: 24px 24px;
@@ -48,7 +48,7 @@ const Inner = styled(Container)`
 const LeftWrapper = styled(Flex)`
   flex-direction: column;
   flex: 1;
-  justifycontent:center;
+  justifycontent: center;
   bottom: 0;
   margin-top: 40px;
   // ${({ theme }) => theme.mediaQueries.sm} {
@@ -73,10 +73,10 @@ const RightWrapper = styled.div`
   // flex: 0.5;
   animation: ${slidein} 3s infinite;
   animation-direction: alternate;
-  height:200px;
+  height: 200px;
 
   & img {
-    height:100%;
+    height: 100%;
   }
 
   // ${({ theme }) => theme.mediaQueries.sm} {
@@ -109,7 +109,7 @@ const PrizeFlex = styled(Flex)`
   }
 `
 
-const HeaderBanner: React.FC<{ title: string, subtitle: string }> = ({ title, subtitle }) => {
+const HeaderBanner: React.FC<{ title: string; subtitle: string }> = ({ title, subtitle }) => {
   const { t } = useTranslation()
   const cakePriceBusd = usePriceCakeBusd()
   const prizeInBusd = cakePriceBusd.times(title)
@@ -130,7 +130,7 @@ const HeaderBanner: React.FC<{ title: string, subtitle: string }> = ({ title, su
           </PrizeFlex>
           {/* <NowLive>{t(subtitle)}</NowLive> */}
           <Text color="white" bold fontSize="20px" mr="8px">
-                {t(subtitle)}
+            {t(subtitle)}
           </Text>
           {/* <NavLink exact activeClassName="active" to="/lottery" id="lottery-pot-banner">
             <Button>
